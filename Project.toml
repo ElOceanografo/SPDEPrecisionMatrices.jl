@@ -1,0 +1,4 @@
+name = "SparseSpatialPrecisionMatrices"
+uuid = "75a5cc25-472e-45e9-b0be-6a58b1dab74f"
+authors = ["Sam Urmy <oceanographerschoice@gmail.com>"]
+version = "0.1.0"

@@ -14,7 +14,7 @@
 #
 
 
-function add_border(mesh, npoints, expansion=1.2)
+function add_border(mesh::TriMesh, npoints::Integer, expansion=1.2)
     ii = vec(mesh.point_marker .== 1)
     edge_points = mesh.point[:, ii]
     cm = mean(mesh.point, dims=2)
@@ -25,7 +25,7 @@ function add_border(mesh, npoints, expansion=1.2)
     xinterp = LinearInterpolation(s, edge_points[1, sortperm(θ)])
     yinterp = LinearInterpolation(s, edge_points[2, sortperm(θ)])
 
-    Δs = (s[end] - s[1]) / npoints
+    Δs = (s[end] - s[1]) / (npoints-1)
     ss = s[1]:Δs:(s[end] - Δs)
     border_points = [xinterp(ss) yinterp(ss)]'
     border_points = (border_points .- cm) * 1.2 .+ cm
@@ -51,8 +51,8 @@ function observation_matrix(mesh, points)
     return sparse(ii, jj, ww, npoint, nmesh)
 end
 
-function setup_model_mesh(points, nnodes; refine=0, nborder=sqrt(nnodes)/2,
-        border_expansion=1.1)
+function setup_model_mesh(points, nnodes;
+        refine=0, nborder=round(Int, sqrt(nnodes)), border_expansion=1.1)
     nodes = collect(kmeans(points, nnodes).centers')
     mesh = create_mesh(nodes)
     mesh = add_border(mesh, nborder, border_expansion)

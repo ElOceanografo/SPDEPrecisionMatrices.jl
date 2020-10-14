@@ -1,14 +1,13 @@
 using SparseSpatialPrecisionMatrices
 using Random
 using SparseArrays
+using LinearAlgebra
+using SpecialFunctions
 using Test
-
-
-Random.seed!(1)
 
 @testset "Meshes" begin
     Random.seed!(0)
-    n = 2_000
+    n = 2000
     nnodes = 400
     points = rand(2, n) .* [100, 50]
     mesh = setup_model_mesh(points, nnodes)
@@ -25,5 +24,26 @@ Random.seed!(1)
 end
 
 @testset "Precision matrices" begin
-    @test 1 == 1
+    Random.seed!(0)
+    n = 2000
+    nnodes = 400
+    points = rand(2, n) .* [100, 50]
+    mesh = setup_model_mesh(points, nnodes)
+
+    r = 15 # decorrelation range
+    σ = 5 # marginal variance
+    ν = 2  # smoothness parameter
+    d = size(mesh.point, 1)
+
+    for ν in 1:5
+        κ = calculate_κ(ν, r)
+        τ = calculate_τ(ν, d, κ, σ)
+        @test κ ≈ sqrt(8ν) / r
+        @test τ ≈ sqrt(gamma(ν) / (gamma(ν + d/2) * (4π)^(d/2))) / (σ * κ^ν)
+        Q0 = unscaled_precision_matrix(mesh, κ, ν)
+        Q = precision_matrix(mesh, r, σ, ν)
+        @test all(Q .≈ τ^2 * Q0)
+        # @test isposdef(Q0)
+        # @test isposdef(Q)
+    end
 end

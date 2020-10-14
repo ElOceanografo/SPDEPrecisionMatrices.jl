@@ -10,7 +10,7 @@ Random.seed!(1)
     Random.seed!(0)
     n = 2_000
     nnodes = 400
-    points = 100 * rand(2, n)
+    points = rand(2, n) .* [100, 50]
     mesh = setup_model_mesh(points, nnodes)
     @test n > mesh.n_point > nnodes
 

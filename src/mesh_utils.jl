@@ -1,17 +1,17 @@
-function plotmesh(m :: TriMesh;
-                        linewidth :: Real = 1,
-                        marker :: String = "None",
-                        markersize :: Real = 10,
-                        color = :black)
-    p = plot()
-    for edge in eachcol(m.edge)
-        xy = m.point[:, edge]
-        plot!(p, xy[1, :], xy[2, :], linewidth=linewidth,
-            markersize=markersize, color=color, legend=false)
-    end
-    return p
-end
-
+# function plotmesh(m :: TriMesh;
+#                         linewidth :: Real = 1,
+#                         marker :: String = "None",
+#                         markersize :: Real = 10,
+#                         color = :black)
+#     p = plot()
+#     for edge in eachcol(m.edge)
+#         xy = m.point[:, edge]
+#         plot!(p, xy[1, :], xy[2, :], linewidth=linewidth,
+#             markersize=markersize, color=color, legend=false)
+#     end
+#     return p
+# end
+#
 
 function add_border(mesh, npoints, expansion=1.2)
     ii = vec(mesh.point_marker .== 1)
@@ -31,4 +31,21 @@ function add_border(mesh, npoints, expansion=1.2)
 
     nodes = collect([mesh.point border_points]')
     return create_mesh(nodes)
+end
+
+function inverse_distance_weights(dists)
+    w = 1 ./ dists
+    return w / sum(w)
+end
+
+function observation_matrix(mesh, points)
+    npoint = size(points, 2)
+    nmesh = size(mesh.point, 2)
+    tree = KDTree(mesh.point)
+    idx, dists = knn(tree, points, 3)
+
+    ii = repeat(1:npoint, inner=3)
+    jj = reduce(vcat, idx)
+    ww = mapreduce(inverse_distance_weights, vcat, dists)
+    return sparse(ii, jj, ww, npoint, nmesh)
 end

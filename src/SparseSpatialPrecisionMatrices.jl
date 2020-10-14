@@ -4,7 +4,11 @@ using TriangleMesh
 using Interpolations
 using SparseArrays
 using LinearAlgebra
+using SpecialFunctions
+using Statistics
 using Clustering
+using NearestNeighbors
+
 
 export component_matrices,
     unscaled_precision_matrix,

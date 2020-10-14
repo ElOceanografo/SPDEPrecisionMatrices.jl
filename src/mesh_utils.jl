@@ -34,12 +34,12 @@ function add_border(mesh::TriMesh, npoints::Integer, expansion=1.2)
     return create_mesh(nodes)
 end
 
-function inverse_distance_weights(dists)
+function inverse_distance_weights(dists::AbstractVector)
     w = [d > 0 ? 1/d : 1/(d+eps()) for d in dists]
     return w / sum(w)
 end
 
-function observation_matrix(mesh, points)
+function observation_matrix(mesh::TriMesh, points::AbstractMatrix)
     npoint = size(points, 2)
     nmesh = size(mesh.point, 2)
     tree = KDTree(mesh.point)
@@ -51,7 +51,7 @@ function observation_matrix(mesh, points)
     return sparse(ii, jj, ww, npoint, nmesh)
 end
 
-function setup_model_mesh(points, nnodes;
+function setup_model_mesh(points::AbstractMatrix, nnodes::Integer;
         refine=0, nborder=round(Int, sqrt(nnodes)), border_expansion=1.1)
     nodes = collect(kmeans(points, nnodes).centers')
     mesh = create_mesh(nodes)

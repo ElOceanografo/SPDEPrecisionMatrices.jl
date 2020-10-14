@@ -1,5 +1,5 @@
 
-function component_matrices(mesh, κ)
+function component_matrices(mesh::TriMesh, κ::Real)
     d = size(mesh.point, 1)
     n_edge = size(mesh.edge, 2)
     ii = zeros(Int, n_edge)
@@ -43,7 +43,7 @@ function component_matrices(mesh, κ)
     return C, C_tilde, G
 end
 
-function unscaled_precision_matrix(mesh, κ, ν)
+function unscaled_precision_matrix(mesh::TriMesh, κ::Real, ν::Real)
     d = size(mesh.point, 1)
     α = ν + div(d, 2)
     α::Integer
@@ -71,7 +71,7 @@ function unscaled_precision_matrix(mesh, κ, ν)
     end
 end
 
-function precision_matrix(mesh, r, σ, ν::Integer)
+function precision_matrix(mesh::TriMesh, r::Real, σ::Real, ν::Integer)
     d = size(mesh.point, 1)
     κ = sqrt(8ν) / r
     τ = sqrt(gamma(ν) / (gamma(ν + d/2) * (4π)^(d/2))) / (σ * κ^ν)

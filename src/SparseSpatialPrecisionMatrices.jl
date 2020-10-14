@@ -13,7 +13,9 @@ using NearestNeighbors
 export component_matrices,
     unscaled_precision_matrix,
     precision_matrix,
-    add_border
+    setup_model_mesh,
+    add_border,
+    observation_matrix
 
 include("mesh_utils.jl")
 include("spde_precision_matrices.jl")

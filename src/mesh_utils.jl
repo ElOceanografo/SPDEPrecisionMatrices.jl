@@ -13,6 +13,7 @@
 # end
 #
 
+
 function add_border(mesh, npoints, expansion=1.2)
     ii = vec(mesh.point_marker .== 1)
     edge_points = mesh.point[:, ii]
@@ -34,7 +35,7 @@ function add_border(mesh, npoints, expansion=1.2)
 end
 
 function inverse_distance_weights(dists)
-    w = 1 ./ dists
+    w = [d > 0 ? 1/d : 1/(d+eps()) for d in dists]
     return w / sum(w)
 end
 
@@ -48,4 +49,15 @@ function observation_matrix(mesh, points)
     jj = reduce(vcat, idx)
     ww = mapreduce(inverse_distance_weights, vcat, dists)
     return sparse(ii, jj, ww, npoint, nmesh)
+end
+
+function setup_model_mesh(points, nnodes; refine=0, nborder=sqrt(nnodes)/2,
+        border_expansion=1.1)
+    nodes = collect(kmeans(points, nnodes).centers')
+    mesh = create_mesh(nodes)
+    mesh = add_border(mesh, nborder, border_expansion)
+    if refine > 0
+        mesh = refine(mesh, divide_cell_into=refine)
+    end
+    return mesh
 end

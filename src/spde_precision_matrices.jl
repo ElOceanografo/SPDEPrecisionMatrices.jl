@@ -71,10 +71,13 @@ function unscaled_precision_matrix(mesh::TriMesh, κ::Real, ν::Real)
     end
 end
 
+calculate_κ(ν, r) = sqrt(8ν) / r
+calculate_τ(ν, d, κ, σ) = sqrt(gamma(ν) / (gamma(ν + d/2) * (4π)^(d/2))) / (σ * κ^ν)
+
 function precision_matrix(mesh::TriMesh, r::Real, σ::Real, ν::Integer)
     d = size(mesh.point, 1)
-    κ = sqrt(8ν) / r
-    τ = sqrt(gamma(ν) / (gamma(ν + d/2) * (4π)^(d/2))) / (σ * κ^ν)
+    κ = calculate_κ(ν, r)
+    τ = calculate_τ(ν, d, κ, σ)
     Q = unscaled_precision_matrix(mesh, κ, ν)
     return Q * τ^2
 end

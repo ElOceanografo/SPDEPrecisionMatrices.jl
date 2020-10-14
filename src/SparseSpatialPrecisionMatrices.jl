@@ -12,6 +12,8 @@ using NearestNeighbors
 
 export component_matrices,
     unscaled_precision_matrix,
+    calculate_κ,
+    calculate_τ,
     precision_matrix,
     setup_model_mesh,
     add_border,

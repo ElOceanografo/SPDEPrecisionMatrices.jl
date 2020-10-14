@@ -13,7 +13,6 @@
 # end
 #
 
-
 function add_border(mesh::TriMesh, npoints::Integer, expansion=1.2)
     ii = vec(mesh.point_marker .== 1)
     edge_points = mesh.point[:, ii]
@@ -51,13 +50,10 @@ function observation_matrix(mesh::TriMesh, points::AbstractMatrix)
     return sparse(ii, jj, ww, npoint, nmesh)
 end
 
-function setup_model_mesh(points::AbstractMatrix, nnodes::Integer;
-        refine=0, nborder=round(Int, sqrt(nnodes)), border_expansion=1.1)
-    nodes = collect(kmeans(points, nnodes).centers')
-    mesh = create_mesh(nodes)
-    mesh = add_border(mesh, nborder, border_expansion)
-    if refine > 0
-        mesh = refine(mesh, divide_cell_into=refine)
-    end
-    return mesh
+function setup_model_mesh(points::AbstractMatrix, nnodes::Integer,
+        border_expansion=1.1)
+    nodes = collect(kmeans(points, nnodes ÷ 8).centers')
+    nborder = round(Int, sqrt(nnodes ÷ 4))
+    mesh = add_border(create_mesh(nodes), nborder, border_expansion)
+    return refine(mesh, divide_cell_into=2)
 end

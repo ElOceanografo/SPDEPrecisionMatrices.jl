@@ -4,7 +4,7 @@ authors = ["Sam Urmy <oceanographerschoice@gmail.com>"]
 version = "0.1.0"
 
 [deps]
-Clustering = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
+ConcaveHull = "7d11a335-8259-52c9-8750-e30c45c66484"
 Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 NearestNeighbors = "b8a86587-4115-5ab1-83bc-aa920d37bbce"

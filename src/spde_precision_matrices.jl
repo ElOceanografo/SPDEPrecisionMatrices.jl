@@ -23,7 +23,11 @@ function component_matrices(mesh::TriMesh, κ::Real)
         ej = vi - vk
         ek = vj - vi
         edges = Dict(i => ei, j => ej, k => ek)
-        θk = acos(dot(ei, ej) / (norm(ei)*norm(ej)))
+
+        # the following is a hack to make sure the argument of acos doesn't
+        # end up outside [-1, 1] due to floating point error
+        x = dot(ei, ej) / (norm(ei)*norm(ej))
+        θk = acos(sign(x) * min(abs(x), 1))
         area = 0.5 * norm(ei) * norm(ej) * sin(θk)
 
         for m in [i, j, k]

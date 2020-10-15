@@ -6,7 +6,6 @@ using SparseArrays
 using LinearAlgebra
 using SpecialFunctions
 using Statistics
-using Clustering
 using NearestNeighbors
 using ConcaveHull
 

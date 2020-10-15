@@ -8,6 +8,7 @@ using SpecialFunctions
 using Statistics
 using Clustering
 using NearestNeighbors
+using ConcaveHull
 
 
 export component_matrices,
@@ -15,8 +16,7 @@ export component_matrices,
     calculate_κ,
     calculate_τ,
     precision_matrix,
-    setup_model_mesh,
-    add_border,
+    make_border_points,
     observation_matrix
 
 include("mesh_utils.jl")

@@ -13,24 +13,29 @@
 # end
 #
 
-function add_border(mesh::TriMesh, npoints::Integer, expansion=1.2)
-    ii = vec(mesh.point_marker .== 1)
-    edge_points = mesh.point[:, ii]
-    cm = mean(mesh.point, dims=2)
+
+function make_border_points(points, n, expansion, k=size(points, 2))
+    hull = concave_hull(collect(eachcol(points)), k)
+    cm = mean(points, dims=2)
+    points2 = cm .+ 1.01 * (points .- cm)
+    edge_points = reduce(hcat, [p for p in eachcol(points2) if ! in_hull(p, hull)])
 
     θ = [atan(y, x) for (x, y) in eachcol(edge_points .- cm)]
-    ds = vec(sqrt.(sum(diff(edge_points[:, sortperm(θ)], dims=2).^2, dims=1)))
+    x = edge_points[1, sortperm(θ)]
+    y = edge_points[2, sortperm(θ)]
+    θ = [θ; θ[1]]
+    x = [x; x[1]]
+    y = [y; y[1]]
+
+    ds = vec(sqrt.(sum(diff([x y]', dims=2).^2, dims=1)))
     s = cumsum([0; ds])
-    xinterp = LinearInterpolation(s, edge_points[1, sortperm(θ)])
-    yinterp = LinearInterpolation(s, edge_points[2, sortperm(θ)])
+    xinterp = LinearInterpolation(s, x)
+    yinterp = LinearInterpolation(s, y)
 
-    Δs = (s[end] - s[1]) / (npoints-1)
-    ss = s[1]:Δs:(s[end] - Δs)
+    Δs = (s[end] - s[1]) / n
+    ss = s[1]:Δs:s[end]
     border_points = [xinterp(ss) yinterp(ss)]'
-    border_points = (border_points .- cm) * 1.2 .+ cm
-
-    nodes = collect([mesh.point border_points]')
-    return create_mesh(nodes)
+    border_points = (border_points .- cm) * expansion .+ cm
 end
 
 function inverse_distance_weights(dists::AbstractVector)
@@ -48,12 +53,4 @@ function observation_matrix(mesh::TriMesh, points::AbstractMatrix)
     jj = reduce(vcat, idx)
     ww = mapreduce(inverse_distance_weights, vcat, dists)
     return sparse(ii, jj, ww, npoint, nmesh)
-end
-
-function setup_model_mesh(points::AbstractMatrix, nnodes::Integer,
-        border_expansion=1.1)
-    nodes = collect(kmeans(points, nnodes ÷ 8).centers')
-    nborder = round(Int, sqrt(nnodes ÷ 4))
-    mesh = add_border(create_mesh(nodes), nborder, border_expansion)
-    return refine(mesh, divide_cell_into=2)
 end

@@ -32,7 +32,7 @@ Next, we specify the desired marginal variance and decorrelation length our Mate
 
 ```julia
 using SparseSpatialPrecisionMatrices
-using LinearAlgebra
+using LinearAlgebra, SparseArrays
 
 r = 15 # decorrelation range
 σ = 5 # marginal standard deviation
@@ -48,8 +48,6 @@ We can then use the precision matrix to generate correlated Gaussian samples
 by taking the Cholesky decomposition of the precision matrix, generating a vector of standard normal white noise `z`, and backsolving for the correlated field `x`.
 
 ```julia
-using Distributions
-using PDMats, SparseArrays
 # sparse cholesky permutes the matrix, so we have to use the permuted lower
 # triangle to get them in the right order
 U = cholesky(Q).PtL'
@@ -73,7 +71,7 @@ surface(mesh.point[1, :], mesh.point[2, :], xg, camera=(45, 80))
 For statistical modeling, precision matrices can be used with the `MvNormalCanon` distribution from `Distributions.jl`.  Unfortunately, the autodiff packages don't currently have full sparse matrix functionality implemented, so there are some limits on what you can do for the moment.
 
 ```julia
-using PDMats, SparseArrays
+using PDMats
 D = MvNormalCanon(PDSparseMat(sparse(Q)))
 logpdf(D, x)
 ```

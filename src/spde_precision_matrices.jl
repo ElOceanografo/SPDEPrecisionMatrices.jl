@@ -108,28 +108,42 @@ end
 
 """
     calculate_κ(ν, r) -> Real
-    calculate_τ(ν, d, κ, σ) -> Real
 
 Calculate the value of the correlation decay rate parameter given a smoothness `ν`
 and range `r` where correlation drops to roughly 0.1, calculate the value of κ
 
 ```math
 κ = \frac{\sqrt{8 ν}}{r}\\
-τ = \frac{1}{\sigma \kappa^\nu}{\Gamma(\nu)}{\Gamma(\nu + d / 2) (4 \pi)^{d / 2}}
 ```
 
 # Arguments
 - `ν`: Matérn smoothness
 - `r`: correlation range
+
+# Returns
+- `κ`: correlation decay rate parameter value
+"""
+calculate_κ(ν, r) = sqrt(8ν) / r
+
+"""
+    calculate_τ(ν, d, κ, σ) -> Real
+
+Calculate the scaling factor for a Matérn precision matrix given a smoothness,
+domain dimension, correlation distance, and marginal standard deviation.
+
+```math
+τ = \frac{1}{\sigma \kappa^\nu}{\Gamma(\nu)}{\Gamma(\nu + d / 2) (4 \pi)^{d / 2}}
+```
+
+# Arguments
+- `ν`: Matérn smoothness
 - `d`: Dimension of the domain (i.e. 2 for spatial domains)
 - `κ`: correlation decay rate
 - `σ`: marginal standard deviation
 
 # Returns
-- `κ`: correlation decay rate parameter value
 - `τ`: Precision matrix scaling parameter
 """
-calculate_κ(ν, r) = sqrt(8ν) / r
 calculate_τ(ν, d, κ, σ) = sqrt(gamma(ν) / (gamma(ν + d/2) * (4π)^(d/2))) / (σ * κ^ν)
 
 """

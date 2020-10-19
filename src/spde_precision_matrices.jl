@@ -106,14 +106,15 @@ function unscaled_precision_matrix(mesh::TriMesh, κ::Real, ν::Real)
     end
 end
 
-"""
+# Use @doc raw"" to allow math
+@doc raw"""
     calculate_κ(ν, r) -> Real
 
 Calculate the value of the correlation decay rate parameter given a smoothness `ν`
 and range `r` where correlation drops to roughly 0.1, calculate the value of κ
 
 ```math
-κ = \frac{\sqrt{8 ν}}{r}\\
+κ = \frac{\sqrt{8 \nu}}{r}
 ```
 
 # Arguments
@@ -125,7 +126,7 @@ and range `r` where correlation drops to roughly 0.1, calculate the value of κ
 """
 calculate_κ(ν, r) = sqrt(8ν) / r
 
-"""
+@doc raw"""
     calculate_τ(ν, d, κ, σ) -> Real
 
 Calculate the scaling factor for a Matérn precision matrix given a smoothness,

@@ -13,7 +13,20 @@
 # end
 #
 
+"""
+    make_border_points(points, n, expansion, k = size(points, 2)) -> Matrix
 
+Create a set of border points around the hull of a domain.
+
+# Arguments
+- `points`: points to form a hull around, as a matrix with a point in each column
+- `n`: number of edge points
+- `expansion`: factor to extend the hull beyond the provided points
+- `k`: number of neighbors to use when determining hull. Default is all points, giving a convex hull; can be decreased to make the hull concave.
+
+# Returns
+- `Matrix`: coordinates of domain border
+"""
 function make_border_points(points, n, expansion, k=size(points, 2))
     hull = concave_hull(collect(eachcol(points)), k)
     cm = mean(points, dims=2)
@@ -38,11 +51,34 @@ function make_border_points(points, n, expansion, k=size(points, 2))
     border_points = (border_points .- cm) * expansion .+ cm
 end
 
+"""
+    inverse_distance_weights(dists::AbstractVector) -> Vector
+
+Calculate the relative weights via inverse distance.
+
+# Arguments
+- `dists::AbstractVector`: vector of distances
+
+# Returns
+- `Vector`: relative weight of points at each distance
+"""
 function inverse_distance_weights(dists::AbstractVector)
     w = [d > 0 ? 1/d : 1/(d+eps()) for d in dists]
     return w / sum(w)
 end
 
+"""
+    observation_matrix(mesh::TriMesh, points::AbstractMatrix) -> SparseMatricCSC
+
+Create matrix of weights to linearly interpolate from nodes to observation locations.
+
+# Arguments
+- `mesh::TriMesh`: a mesh from TriangleMesh.jl
+- `points::AbstractMatrix`: observation locations in columns
+
+# Returns
+- `SparseMatrixCSC`: sparse matrix with weights
+"""
 function observation_matrix(mesh::TriMesh, points::AbstractMatrix)
     npoint = size(points, 2)
     nmesh = size(mesh.point, 2)

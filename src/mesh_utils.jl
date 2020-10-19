@@ -16,13 +16,13 @@
 """
     make_border_points(points, n, expansion, k = size(points, 2)) -> Matrix
 
-Determine points along the edge of the domain.
+Create a set of border points around the hull of a domain.
 
 # Arguments
-- `points`: points to form a hull around
+- `points`: points to form a hull around, as a matrix with a point in each column
 - `n`: number of edge points
 - `expansion`: factor to extend the hull beyond the provided points
-- `k`: number of neighbors to use when determining hull; larger is smoother
+- `k`: number of neighbors to use when determining hull. Default is all points, giving a convex hull; can be decreased to make the hull concave.
 
 # Returns
 - `Matrix`: coordinates of domain border
@@ -70,7 +70,7 @@ end
 """
     observation_matrix(mesh::TriMesh, points::AbstractMatrix) -> SparseMatricCSC
 
-Calculate the weights to interpolate from nodes to observation locations.
+Create matrix of weights to linearly interpolate from nodes to observation locations.
 
 # Arguments
 - `mesh::TriMesh`: a mesh from TriangleMesh.jl

@@ -6,7 +6,7 @@ method matrices C, C̃, and G as described in Lindgren et al. 2011.
 
 # Arguments
 - `mesh::TriMesh`: a mesh from TriangleMesh.jl
-- `κ::Real`: Matérn smoothness parameter
+- `κ::Real`: Matérn correlation decay rate parameter
 
 # Returns
 - `(Matrix, Matrix, Matrix)`: the C, C̃, and G matrices, respectively

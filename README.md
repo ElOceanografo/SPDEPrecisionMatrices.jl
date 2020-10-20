@@ -1,4 +1,4 @@
-# SparseSpatialPrecisionMatrices.jl
+# SPDEPrecisionMatrices.jl
 *Sparse precision matrices for random spatial fields using SPDE approximation*
 
 **Note: this package is currently an unreleased work in progress.**
@@ -31,7 +31,7 @@ mesh = refine(mesh, divide_cell_into=4, voronoi=true)
 Next, we specify the desired marginal variance and decorrelation length our Matern field, as well as its smoothness parameter `ν`.  From there it's easy to construct a precision matrix for our mesh:
 
 ```julia
-using SparseSpatialPrecisionMatrices
+using SPDEPrecisionMatrices
 using LinearAlgebra, SparseArrays
 
 r = 15 # decorrelation range

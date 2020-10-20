@@ -1,4 +1,4 @@
-using SparseSpatialPrecisionMatrices
+using SPDEPrecisionMatrices
 using Random
 using SparseArrays
 using TriangleMesh

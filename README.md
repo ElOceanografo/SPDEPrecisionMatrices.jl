@@ -62,7 +62,7 @@ x = U \ randn(mesh.n_point)
 surface(mesh.point[1, :], mesh.point[2, :], x, zlim=4*[-σ, σ], camera=(45, 80))
 ```
 
-![Random Gaussian Markov random field](Gaussian_MRF.png)
+![Random Gaussian Markov random field](docs/src/img/Gaussian_MRF.png)
 
 We don't need to use normal white noise to drive the random field.  For instance, we can use Gamma noise if we want a non-negative field.
 
@@ -72,7 +72,7 @@ xg = U \ rand(Gamma(0.1, 100), mesh.n_point)
 surface(mesh.point[1, :], mesh.point[2, :], xg, camera=(45, 80))
 ```
 
-![Random Gamma Markov random field](Gamma_MRF.png)
+![Random Gamma Markov random field](docs/src/img/Gamma_MRF.png)
 
 
 For statistical modeling, precision matrices can be used with the `MvNormalCanon` distribution from `Distributions.jl`.  Unfortunately, the autodiff packages don't currently have full sparse matrix functionality implemented, so there are some limits on what you can do for the moment.

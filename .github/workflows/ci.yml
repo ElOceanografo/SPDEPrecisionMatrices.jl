@@ -56,8 +56,8 @@ jobs:
       - run: |
           julia --project=docs -e '
             using Documenter: doctest
-            using SPDEPrecisionMatrices2
-            doctest(SPDEPrecisionMatrices2)'
+            using SPDEPrecisionMatrices
+            doctest(SPDEPrecisionMatrices)'
       - run: julia --project=docs docs/make.jl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -4,10 +4,10 @@
 
 **Note: this package is currently an unreleased work in progress.**
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://jkbest2.github.io/SPDEPrecisionMatrices2.jl/stable)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://jkbest2.github.io/SPDEPrecisionMatrices2.jl/dev)
-[![Build Status](https://github.com/jkbest2/SPDEPrecisionMatrices2.jl/workflows/CI/badge.svg)](https://github.com/jkbest2/SPDEPrecisionMatrices2.jl/actions)
-[![Coverage](https://codecov.io/gh/jkbest2/SPDEPrecisionMatrices2.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/jkbest2/SPDEPrecisionMatrices2.jl)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://jkbest2.github.io/SPDEPrecisionMatrices.jl/stable)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://jkbest2.github.io/SPDEPrecisionMatrices.jl/dev)
+[![Build Status](https://github.com/jkbest2/SPDEPrecisionMatrices.jl/workflows/CI/badge.svg)](https://github.com/jkbest2/SPDEPrecisionMatrices.jl/actions)
+[![Coverage](https://codecov.io/gh/jkbest2/SPDEPrecisionMatrices.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/jkbest2/SPDEPrecisionMatrices.jl)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 
 This draft package implements the stochastic partial differential equation (SPDE, Lindgren et al. 2011) method for constructing precision (i.e. inverse covariance) matrices for spatial Markov random fields.

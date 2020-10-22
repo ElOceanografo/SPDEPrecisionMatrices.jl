@@ -1,12 +1,12 @@
 ```@meta
-CurrentModule = SPDEPrecisionMatrices2
+CurrentModule = SPDEPrecisionMatrices
 ```
 
-# SPDEPrecisionMatrices2
+# SPDEPrecisionMatrices
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [SPDEPrecisionMatrices2]
+Modules = [SPDEPrecisionMatrices]
 ```

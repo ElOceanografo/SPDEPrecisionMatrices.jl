@@ -3,12 +3,12 @@ using Documenter
 
 makedocs(;
     modules=[SPDEPrecisionMatrices],
-    authors="Sam Urmy <oceanographerschoice@gmail.com>, John K Best <isposdef@gmail.com>",
-    repo="https://github.com/jkbest2/SPDEPrecisionMatrices.jl/blob/{commit}{path}#L{line}",
+    authors="Sam Urmy <oceanographerschoice@gmail.com>",
+    repo="https://github.com/eloceanografo/SPDEPrecisionMatrices.jl/blob/{commit}{path}#L{line}",
     sitename="SPDEPrecisionMatrices.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://jkbest2.github.io/SPDEPrecisionMatrices.jl",
+        canonical="https://eloceanografo.github.io/SPDEPrecisionMatrices.jl",
         assets=String[],
     ),
     pages=[
@@ -17,5 +17,5 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/jkbest2/SPDEPrecisionMatrices.jl",
+    repo="github.com/eloceanografo/SPDEPrecisionMatrices.jl",
 )

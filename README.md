@@ -1,7 +1,14 @@
 # SPDEPrecisionMatrices.jl
+
 *Sparse precision matrices for random spatial fields using SPDE approximation*
 
 **Note: this package is currently an unreleased work in progress.**
+
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://eloceanografo.github.io/SPDEPrecisionMatrices.jl/stable)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://eloceanografo.github.io/SPDEPrecisionMatrices.jl/dev)
+[![Build Status](https://github.com/eloceanografo/SPDEPrecisionMatrices.jl/workflows/CI/badge.svg)](https://github.com/eloceanografo/SPDEPrecisionMatrices.jl/actions)
+[![Coverage](https://codecov.io/gh/eloceanografo/SPDEPrecisionMatrices.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/eloceanografo/SPDEPrecisionMatrices.jl)
+[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 
 This draft package implements the stochastic partial differential equation (SPDE, Lindgren et al. 2011) method for constructing precision (i.e. inverse covariance) matrices for spatial Markov random fields.
 
@@ -55,7 +62,7 @@ x = U \ randn(mesh.n_point)
 surface(mesh.point[1, :], mesh.point[2, :], x, zlim=4*[-σ, σ], camera=(45, 80))
 ```
 
-![Random Gaussian Markov random field](Gaussian_MRF.png)
+![Random Gaussian Markov random field](docs/src/img/Gaussian_MRF.png)
 
 We don't need to use normal white noise to drive the random field.  For instance, we can use Gamma noise if we want a non-negative field.
 
@@ -65,7 +72,7 @@ xg = U \ rand(Gamma(0.1, 100), mesh.n_point)
 surface(mesh.point[1, :], mesh.point[2, :], xg, camera=(45, 80))
 ```
 
-![Random Gamma Markov random field](Gamma_MRF.png)
+![Random Gamma Markov random field](docs/src/img/Gamma_MRF.png)
 
 
 For statistical modeling, precision matrices can be used with the `MvNormalCanon` distribution from `Distributions.jl`.  Unfortunately, the autodiff packages don't currently have full sparse matrix functionality implemented, so there are some limits on what you can do for the moment.

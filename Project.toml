@@ -15,3 +15,6 @@ TriangleMesh = "e5719326-7e34-5a7d-b19a-3e86f2e9acf7"
 
 [compat]
 SpecialFunctions = "0.10"
+Interpolations = "0.13"
+TriangleMesh = "1.1"
+ConcaveHull = "1.1"

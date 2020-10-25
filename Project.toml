@@ -14,5 +14,6 @@ Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 TriangleMesh = "e5719326-7e34-5a7d-b19a-3e86f2e9acf7"
 
 [compat]
+Interpolations = "0.13"
 TriangleMesh = "1.1"
 ConcaveHull = "1.1"
